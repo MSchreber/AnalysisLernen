@@ -64,7 +64,7 @@
         button {
             font-size: 1em;
             padding: 10px 15px;
-            color: white; /* Macht den Button-Text und das SVG-Icon weiß */
+            color: white;
             background-color: #6e8efb;
             border: none;
             border-radius: 5px;
@@ -82,7 +82,7 @@
             cursor: not-allowed;
         }
 
-        /* SVG-Icon */
+        /* Shuffle-Icon */
         .shuffle-icon {
             width: 18px;
             height: 18px;
@@ -96,14 +96,12 @@
         <textarea id="output" readonly></textarea>
         <div class="button-container">
             <button onclick="previousLine()" id="prevButton">Zurück</button>
-            <button onclick="nextLine()" id="nextButton">Weiter</button>
-            <!-- Shuffle-Button mit Inline-SVG -->
+            <!-- Shuffle-Button in der Mitte mit Icon -->
             <button onclick="shuffleLine()" id="shuffleButton">
-                <svg class="shuffle-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18">
-                    <path fill="currentColor" d="M16 3h5v5h-2V5h-3V3zm0 18h3v-3h2v5h-5v-2zm3.5-14.5l-11 11 1.5 1.5 11-11-1.5-1.5zM4 7h5v2H5v3H3V7zm0 13h3v-3h2v5H4v-2z"/>
-                </svg>
+                <img src="shuffle.svg" alt="Shuffle" class="shuffle-icon">
                 Zufall
             </button>
+            <button onclick="nextLine()" id="nextButton">Weiter</button>
         </div>
     </div>
 
