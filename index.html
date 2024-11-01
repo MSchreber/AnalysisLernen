@@ -55,6 +55,35 @@
             margin-bottom: 20px;
         }
 
+        /* Fortschrittsanzeige */
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            height: 20px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #6e8efb;
+            transition: width 0.3s;
+            position: relative;
+        }
+
+        .progress-bar #progressText {
+            position: absolute;
+            right: 10px;
+            color: white;
+            font-weight: bold;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+        }
+
         /* Buttons */
         .button-container {
             display: flex;
@@ -109,12 +138,20 @@
         <img src="bodenlos.png" alt="Logo" class="logo">
         <h1>Vokabel-Lerner</h1>
         <textarea id="output" readonly></textarea>
+
+        <!-- Fortschrittsanzeige -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">
+                <span id="progressText"></span>
+            </div>
+        </div>
+
         <div class="button-container">
             <button onclick="previousLine()" id="prevButton">Zurück</button>
             <!-- Shuffle-Button mit angepasstem Gradient und Icon -->
             <button onclick="shuffleLine()" id="shuffleButton">
                 <img src="shuffle.svg" alt="Shuffle" class="shuffle-icon">
-                Shuffle
+                Zufall
             </button>
             <button onclick="nextLine()" id="nextButton">Weiter</button>
         </div>
@@ -131,6 +168,7 @@
                 lines = text.split('\n'); // Text in Zeilen splitten
                 displayLine(); // Erste Zeile anzeigen
                 updateButtons(); // Buttons aktivieren/deaktivieren
+                updateProgressBar(); // Fortschrittsanzeige aktualisieren
             })
             .catch(error => console.error('Fehler beim Laden der Datei:', error));
 
@@ -146,6 +184,7 @@
                 currentIndex++;
                 displayLine();
                 updateButtons();
+                updateProgressBar(); // Fortschrittsanzeige aktualisieren
             }
         }
 
@@ -155,6 +194,7 @@
                 currentIndex--;
                 displayLine();
                 updateButtons();
+                updateProgressBar(); // Fortschrittsanzeige aktualisieren
             }
         }
 
@@ -163,12 +203,22 @@
             currentIndex = Math.floor(Math.random() * lines.length);
             displayLine();
             updateButtons();
+            updateProgressBar(); // Fortschrittsanzeige aktualisieren
         }
 
         // Buttons aktivieren/deaktivieren je nach Position
         function updateButtons() {
             document.getElementById('prevButton').disabled = currentIndex === 0;
             document.getElementById('nextButton').disabled = currentIndex === lines.length - 1;
+        }
+
+        // Funktion zum Aktualisieren der Fortschrittsanzeige
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const percentage = ((currentIndex + 1) / lines.length) * 100;
+            progressBar.style.width = percentage + '%';
+            progressText.textContent = Math.floor(percentage) + '%';
         }
     </script>
 </body>

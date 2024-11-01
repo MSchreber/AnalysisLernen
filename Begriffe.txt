@@ -51,4 +51,12 @@ Was ist die Teleskopreihe? Konvergiert sie wenn nein warum nicht, wenn ja wogege
 Was ist die Harmonische Reihe? Konvergiert sie wenn nein warum nicht, wenn ja wogegen konvergiert sie?
 Welche Rechenregeln gibt es für Reihen?
 Was ist die notwendige Bedingung für Konvergenz von Reihen? Und warum ist es nicht hinreichend? Beispiel?
+Was ist eine Majorante? welche Eigenschaften muss sie aufweisen?
+Wie nennt man eine Reihe die nicht konvergiert?
+Was ist eine divergente Minorante? Und was ist überhaupt eine Minorante?
+Was ist das Quotientenkriterium? und warum reicht es nicht, wenn einfach alles < 1 und man kein festes q hat?
+Was ist die Exponentialreihe? Kannst du die Formel aus dem Kopf?
+Wie hängen e und exp() zusammen?
+Was ist eine alternierende Reihe?
+Was ist das Leibnitzkriterium?
 
