@@ -29,3 +29,8 @@ Ist jede konvergente Folge beschränkt?
 was ist eine monoton wachsende und was eine streng monoton wachsende Folge?
 Kennst du die Rechenregeln für Grenzwerte?
 Was ist eine stetige Funktion?
+Wie kann ich stetige Funktionen verketten? Welche Schreibweise und welche Bedingungen sind daran geknüpft?
+Was ist ein linksseitiger- bzw. rechtsseitiger Grenzwert?
+Was ist die Fixpunktiteration?
+Wofür ist die Fixpunktiteration wichtig? Welche Rolle spielt es im mathematisch-informatischen Kontext?
+Welche Beispiele wurden zur Fixpunkt-Iteration genannt?
