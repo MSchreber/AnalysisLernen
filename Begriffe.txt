@@ -36,3 +36,8 @@ Was ist die Fixpunktiteration?
 Wofür ist die Fixpunktiteration wichtig? Welche Rolle spielt es im mathematisch-informatischen Kontext?
 Welche Beispiele wurden zur Fixpunkt-Iteration genannt?
 Welche Folge konvergiert gegen e?
+Was ist der Limes superior und der Limes inferior?
+Ist x_n oben quer monoton fallend oder steigend?
+Ist x_n unten quer monoton fallend oder steigend?
+Was ist ein Häufungspunkt?
+
