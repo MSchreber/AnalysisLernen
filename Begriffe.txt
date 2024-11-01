@@ -58,5 +58,5 @@ Was ist das Quotientenkriterium? und warum reicht es nicht, wenn einfach alles <
 Was ist die Exponentialreihe? Kannst du die Formel aus dem Kopf?
 Wie hängen e und exp() zusammen?
 Was ist eine alternierende Reihe?
-Was ist das Leibnitzkriterium?
-
+Was ist das Leibnitzkriterium? Wie wende ich es an?
+Was ist eine absolute Konvergenz?

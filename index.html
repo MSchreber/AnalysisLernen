@@ -68,7 +68,8 @@
         .progress-bar {
             height: 100%;
             width: 0%;
-            background-color: #6e8efb;
+            /* Gradient für die Fortschrittsanzeige */
+            background: linear-gradient(to right, red, blue, violet);
             transition: width 0.3s;
             position: relative;
         }
@@ -159,14 +160,17 @@
 
     <script>
         let lines = [];
-        let currentIndex = 0;
+        let currentVisitedIndex = -1;
+        let visitedIndices = [];
+        let unseenIndices = [];
 
         // Laden der Textdatei
         fetch('Begriffe.txt')
             .then(response => response.text())
             .then(text => {
                 lines = text.split('\n'); // Text in Zeilen splitten
-                displayLine(); // Erste Zeile anzeigen
+                unseenIndices = Array.from({length: lines.length}, (v, k) => k); // Indizes initialisieren
+                shuffleLine(); // Ersten Eintrag anzeigen
                 updateButtons(); // Buttons aktivieren/deaktivieren
                 updateProgressBar(); // Fortschrittsanzeige aktualisieren
             })
@@ -175,48 +179,65 @@
         // Funktion zur Anzeige der aktuellen Zeile
         function displayLine() {
             const output = document.getElementById('output');
-            output.value = lines[currentIndex] || "Ende der Datei erreicht.";
+            if (currentVisitedIndex >= 0 && currentVisitedIndex < visitedIndices.length) {
+                const index = visitedIndices[currentVisitedIndex];
+                output.value = lines[index] || "Ende der Liste erreicht.";
+            } else {
+                output.value = "Keine weiteren Einträge.";
+            }
         }
 
         // Funktion für den "Weiter"-Button
         function nextLine() {
-            if (currentIndex < lines.length - 1) {
-                currentIndex++;
+            if (currentVisitedIndex < visitedIndices.length - 1) {
+                currentVisitedIndex++;
                 displayLine();
                 updateButtons();
-                updateProgressBar(); // Fortschrittsanzeige aktualisieren
+                updateProgressBar();
+            } else if (unseenIndices.length > 0) {
+                shuffleLine(); // Nächsten zufälligen Eintrag anzeigen
+            } else {
+                alert("Alle Einträge wurden angezeigt.");
             }
         }
 
         // Funktion für den "Zurück"-Button
         function previousLine() {
-            if (currentIndex > 0) {
-                currentIndex--;
+            if (currentVisitedIndex > 0) {
+                currentVisitedIndex--;
                 displayLine();
                 updateButtons();
-                updateProgressBar(); // Fortschrittsanzeige aktualisieren
+                updateProgressBar();
             }
         }
 
         // Funktion für den "Shuffle"-Button
         function shuffleLine() {
-            currentIndex = Math.floor(Math.random() * lines.length);
-            displayLine();
-            updateButtons();
-            updateProgressBar(); // Fortschrittsanzeige aktualisieren
+            if (unseenIndices.length > 0) {
+                const randomIndex = Math.floor(Math.random() * unseenIndices.length);
+                const lineIndex = unseenIndices.splice(randomIndex, 1)[0]; // Index entfernen
+                visitedIndices.push(lineIndex);
+                currentVisitedIndex = visitedIndices.length - 1;
+                displayLine();
+                updateButtons();
+                updateProgressBar();
+            } else {
+                alert("Alle Einträge wurden angezeigt.");
+            }
         }
 
         // Buttons aktivieren/deaktivieren je nach Position
         function updateButtons() {
-            document.getElementById('prevButton').disabled = currentIndex === 0;
-            document.getElementById('nextButton').disabled = currentIndex === lines.length - 1;
+            document.getElementById('prevButton').disabled = currentVisitedIndex <= 0;
+            const atEnd = (currentVisitedIndex >= visitedIndices.length - 1) && (unseenIndices.length === 0);
+            document.getElementById('nextButton').disabled = atEnd;
         }
 
         // Funktion zum Aktualisieren der Fortschrittsanzeige
         function updateProgressBar() {
             const progressBar = document.getElementById('progressBar');
             const progressText = document.getElementById('progressText');
-            const percentage = ((currentIndex + 1) / lines.length) * 100;
+            const percentage = ((lines.length - unseenIndices.length) / lines.length) * 100;
             progressBar.style.width = percentage + '%';
             progressText.textContent = Math.floor(percentage) + '%';
         }
