@@ -42,4 +42,13 @@ Ist x_n unten quer monoton fallend oder steigend?
 Was ist ein Häufungspunkt?
 Was ist eine Teilfolge?
 Was ist der Satz von Bolzano-Weierstrass?
+Welches Beispiel fällt dir ein für eine Folge die einen anderen Lim sup hat als Lim inf?
+Muss ein Häufungspunkt auch in der Folge selbst sein?
+Was ist eine Reihe und wie ist sie formal definiert? Was ist eine Partialsumme?
+Welche Beispiele für Reihen fallen dir ein? Und was macht diese Reihe so besonders?
+Was ist die geometrische Reihe? und Wohin konvergiert sie wenn |z| < 1?
+Was ist die Teleskopreihe? Konvergiert sie wenn nein warum nicht, wenn ja wogegen konvergiert sie?
+Was ist die Harmonische Reihe? Konvergiert sie wenn nein warum nicht, wenn ja wogegen konvergiert sie?
+Welche Rechenregeln gibt es für Reihen?
+Was ist die notwendige Bedingung für Konvergenz von Reihen? Und warum ist es nicht hinreichend? Beispiel?
 
