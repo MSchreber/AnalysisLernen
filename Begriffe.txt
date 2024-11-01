@@ -1,0 +1,31 @@
+algebraisch
+transzendent
+Dezimaldarstellung
+abzählbar
+berechenbar
+Kardinalität einer Menge
+Notation für Intervalle: [] ()
+obere Schranke
+Maximum
+Supremum
+Vollständigkeits-Eigenschaft (Tipp: Supremum, etc)
+Eigenschaft einer Menge , dicht in einer anderen Menge zu sein.
+Dreiecksungleichung
+Bernoulli-Ungleichung
+Ungleichung zwischen geometrischem und arithmetischem Mittel
+Länge eines Vektors ➡️➡️ Wie Berechnet man die?
+Skalarprodukt
+Cauchy-Schwarz-Ungleichung
+Die Norm eines Vektors ||x||
+Cauchy Schwarz Ungleichung
+Komplexe Zahlen Überblick (konjugation, allgemeine Form)
+Grenzwert einer Folge (ε-Definition)
+Wie viele Grenzwerte hat eine reelle Folge?
+Was ist das Collatz-Problem?
+Was ist der Einschliessungssatz?
+Was ist ungefähr die Definition einer Folge die gegen ±∞ geht?
+Was ist eine beschränkte Folge?
+Ist jede konvergente Folge beschränkt?
+was ist eine monoton wachsende und was eine streng monoton wachsende Folge?
+Kennst du die Rechenregeln für Grenzwerte?
+

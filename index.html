@@ -1,1 +1,58 @@
-<h1>hello</h1>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Zeilenanzeiger</title>
+    <style>
+        #output {
+            width: 300px;
+            height: 100px;
+            font-size: 1.2em;
+            margin: 10px 0;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Zeilenanzeiger</h1>
+    <textarea id="output" readonly></textarea><br>
+    <button onclick="previousLine()">Zurück</button>
+    <button onclick="nextLine()">Weiter</button>
+
+    <script>
+        let lines = [];
+        let currentIndex = 0;
+
+        // Laden der Textdatei
+        fetch('data.txt')
+            .then(response => response.text())
+            .then(text => {
+                lines = text.split('\n'); // Text in Zeilen splitten
+                displayLine(); // Erste Zeile anzeigen
+            })
+            .catch(error => console.error('Fehler beim Laden der Datei:', error));
+
+        // Funktion zur Anzeige der aktuellen Zeile
+        function displayLine() {
+            const output = document.getElementById('output');
+            output.value = lines[currentIndex] || "Ende der Datei erreicht.";
+        }
+
+        // Funktion für den "Weiter"-Button
+        function nextLine() {
+            if (currentIndex < lines.length - 1) {
+                currentIndex++;
+                displayLine();
+            }
+        }
+
+        // Funktion für den "Zurück"-Button
+        function previousLine() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                displayLine();
+            }
+        }
+    </script>
+</body>
+</html>
