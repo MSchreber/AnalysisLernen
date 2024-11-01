@@ -40,4 +40,6 @@ Was ist der Limes superior und der Limes inferior?
 Ist x_n oben quer monoton fallend oder steigend?
 Ist x_n unten quer monoton fallend oder steigend?
 Was ist ein Häufungspunkt?
+Was ist eine Teilfolge?
+Was ist der Satz von Bolzano-Weierstrass?
 

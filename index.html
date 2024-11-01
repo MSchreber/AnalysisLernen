@@ -84,17 +84,17 @@
 
         /* Spezifischer Stil für den "Zufall"-Button */
         #shuffleButton {
-            background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+            background: linear-gradient(45deg, red, blue, violet);
             color: white;
             border: none;
             border-radius: 5px;
             padding: 10px 15px;
             cursor: pointer;
-            transition: background-position 0.5s;
-            background-size: 400% 400%;
+            transition: background-position 0.5s, background-color 0.3s;
+            background-size: 200% 200%;
         }
         #shuffleButton:hover {
-            background-position: 100% 0;
+            background-position: right center;
         }
 
         /* Shuffle-Icon */
@@ -111,10 +111,10 @@
         <textarea id="output" readonly></textarea>
         <div class="button-container">
             <button onclick="previousLine()" id="prevButton">Zurück</button>
-            <!-- Shuffle-Button mit Regenbogen-Gradient und Icon -->
+            <!-- Shuffle-Button mit angepasstem Gradient und Icon -->
             <button onclick="shuffleLine()" id="shuffleButton">
                 <img src="shuffle.svg" alt="Shuffle" class="shuffle-icon">
-                Zufall
+                Shuffle
             </button>
             <button onclick="nextLine()" id="nextButton">Weiter</button>
         </div>
