@@ -28,4 +28,4 @@ Was ist eine beschränkte Folge?
 Ist jede konvergente Folge beschränkt?
 was ist eine monoton wachsende und was eine streng monoton wachsende Folge?
 Kennst du die Rechenregeln für Grenzwerte?
-
+Was ist eine stetige Funktion?
