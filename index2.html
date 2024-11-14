@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maximilians Analysis Crackhütte</title>
+    <link rel="icon" href="logo.ico" type="image/x-icon">
+    <link rel="icon" href="logo.png" type="image/png">
+    <style>
+        /* Grundlayout */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: #333;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 320px;
+        }
+
+        /* Logo-Stil */
+        .logo {
+            max-width: 250px;
+            margin-bottom: 10px;
+        }
+
+        /* Titel */
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #5a5a5a;
+        }
+
+        /* Textbereich */
+        #output {
+            width: 100%;
+            height: 100px;
+            font-size: 1.1em;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px;
+            resize: none;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* Fortschrittsanzeige */
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            height: 20px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            /* Neuer Gradient von Rot über Gelb zu Grün */
+            background: linear-gradient(to right, #ff5555, #ff9900, #4cda4c);
+            transition: width 0.3s;
+            position: relative;
+        }
+
+        .progress-bar #progressText {
+            position: absolute;
+            right: 10px;
+            color: white;
+            font-weight: bold;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Buttons */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        button {
+            font-size: 1em;
+            padding: 10px 15px;
+            color: white;
+            background-color: #6e8efb;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        button:hover {
+            background-color: #5a6dcf;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        /* Spezifischer Stil für den "Zufall"-Button */
+        #shuffleButton {
+            background: linear-gradient(45deg, red, blue, violet);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-position 0.5s, background-color 0.3s;
+            background-size: 200% 200%;
+        }
+        #shuffleButton:hover {
+            background-position: right center;
+        }
+
+        /* Shuffle-Icon */
+        .shuffle-icon {
+            width: 18px;
+            height: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="bodenlos.png" alt="Logo" class="logo">
+        <h1>Vokabel-Lerner</h1>
+        <textarea id="output" readonly></textarea>
+
+        <!-- Fortschrittsanzeige -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">
+                <span id="progressText"></span>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button onclick="previousLine()" id="prevButton">Zurück</button>
+            <!-- Shuffle-Button mit angepasstem Gradient und Icon -->
+            <button onclick="shuffleLine()" id="shuffleButton">
+                <img src="shuffle.svg" alt="Shuffle" class="shuffle-icon">
+                Zufall
+            </button>
+            <button onclick="nextLine()" id="nextButton">Weiter</button>
+        </div>
+    </div>
+
+    <script>
+        let lines = [];
+        let currentVisitedIndex = -1;
+        let visitedIndices = [];
+        let unseenIndices = [];
+
+        // Laden der Textdatei
+        fetch('Begriffe.txt')
+            .then(response => response.text())
+            .then(text => {
+                lines = text.split('\n'); // Text in Zeilen splitten
+                unseenIndices = Array.from({length: lines.length}, (v, k) => k); // Indizes initialisieren
+                shuffleLine(); // Ersten Eintrag anzeigen
+                updateButtons(); // Buttons aktivieren/deaktivieren
+                updateProgressBar(); // Fortschrittsanzeige aktualisieren
+            })
+            .catch(error => console.error('Fehler beim Laden der Datei:', error));
+
+        // Funktion zur Anzeige der aktuellen Zeile
+        function displayLine() {
+            const output = document.getElementById('output');
+            if (currentVisitedIndex >= 0 && currentVisitedIndex < visitedIndices.length) {
+                const index = visitedIndices[currentVisitedIndex];
+                output.value = lines[index] || "Ende der Liste erreicht.";
+            } else {
+                output.value = "Keine weiteren Einträge.";
+            }
+        }
+
+        // Funktion für den "Weiter"-Button
+        function nextLine() {
+            if (currentVisitedIndex < visitedIndices.length - 1) {
+                currentVisitedIndex++;
+                displayLine();
+                updateButtons();
+                updateProgressBar();
+            } else if (unseenIndices.length > 0) {
+                shuffleLine(); // Nächsten zufälligen Eintrag anzeigen
+            } else {
+                alert("Alle Einträge wurden angezeigt.");
+            }
+        }
+
+        // Funktion für den "Zurück"-Button
+        function previousLine() {
+            if (currentVisitedIndex > 0) {
+                currentVisitedIndex--;
+                displayLine();
+                updateButtons();
+                updateProgressBar();
+            }
+        }
+
+        // Funktion für den "Shuffle"-Button
+        function shuffleLine() {
+            if (unseenIndices.length > 0) {
+                const randomIndex = Math.floor(Math.random() * unseenIndices.length);
+                const lineIndex = unseenIndices.splice(randomIndex, 1)[0]; // Index entfernen
+                visitedIndices.push(lineIndex);
+                currentVisitedIndex = visitedIndices.length - 1;
+                displayLine();
+                updateButtons();
+                updateProgressBar();
+            } else {
+                alert("Alle Einträge wurden angezeigt.");
+            }
+        }
+
+        // Buttons aktivieren/deaktivieren je nach Position
+        function updateButtons() {
+            document.getElementById('prevButton').disabled = currentVisitedIndex <= 0;
+            const atEnd = (currentVisitedIndex >= visitedIndices.length - 1) && (unseenIndices.length === 0);
+            document.getElementById('nextButton').disabled = atEnd;
+        }
+
+        // Funktion zum Aktualisieren der Fortschrittsanzeige
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const percentage = ((lines.length - unseenIndices.length) / lines.length) * 100;
+            progressBar.style.width = percentage + '%';
+            progressText.textContent = Math.floor(percentage) + '%';
+        }
+    </script>
+</body>
+</html>

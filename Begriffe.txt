@@ -60,3 +60,10 @@ Wie hängen e und exp() zusammen?
 Was ist eine alternierende Reihe?
 Was ist das Leibnitzkriterium? Wie wende ich es an?
 Was ist eine absolute Konvergenz?
+Was sind die Eigenschaften der Exponentialfunktion?
+Welche Rechenregeln gelten im Umgang mit der Exponentialfunktion?
+Ist die Exponentialfunktion stetig?
+Was ist die Polardarstellung der Koordinaten?
+Was ist die Formulierung von Bolzano Weierstrass?
+Was ist der Limes inf und er Limes sup und wrum steigt und sinkt etwas immer?
+Was ist eine Teilfolge?
