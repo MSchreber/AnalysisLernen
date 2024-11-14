@@ -187,28 +187,54 @@
         let lines = [];
         let currentVisitedIndex = -1;
         let visitedIndices = [];
-        let unseenIndices = [];
 
-        // Funktion zum Anzeigen/Verstecken der Timer-Leiste
         function toggleHiddenBar() {
             const hiddenBar = document.getElementById('hiddenBar');
             hiddenBar.style.display = hiddenBar.style.display === 'none' ? 'block' : 'none';
         }
 
-        // Funktion zur Anzeige der aktuellen Zeile
         function displayLine() {
             const output = document.getElementById('output');
-            if (currentVisitedIndex >= 0 && currentVisitedIndex < visitedIndices.length) {
-                const index = visitedIndices[currentVisitedIndex];
-                output.value = lines[index] || "Ende der Liste erreicht.";
+            if (currentVisitedIndex >= 0 && currentVisitedIndex < lines.length) {
+                output.value = lines[currentVisitedIndex];
             } else {
                 output.value = "Keine weiteren Einträge.";
             }
         }
 
+        function previousLine() {
+            if (currentVisitedIndex > 0) {
+                currentVisitedIndex--;
+                displayLine();
+            }
+        }
+
+        function nextLine() {
+            if (currentVisitedIndex < lines.length - 1) {
+                currentVisitedIndex++;
+                displayLine();
+            }
+        }
+
+        function shuffleLine() {
+            if (lines.length > 0) {
+                currentVisitedIndex = Math.floor(Math.random() * lines.length);
+                displayLine();
+            }
+        }
+
+        // Fortschrittsanzeige
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const percentage = ((currentVisitedIndex + 1) / lines.length) * 100;
+            progressBar.style.width = percentage + '%';
+            progressText.textContent = Math.floor(percentage) + '%';
+        }
+
         // Timer-Logik
         let timer;
-        let timeRemaining = 25 * 60; // 25 Minuten in Sekunden
+        let timeRemaining = 25 * 60;
         let running = false;
 
         function startTimer() {
@@ -229,7 +255,7 @@
 
         function resetTimer() {
             clearInterval(timer);
-            timeRemaining = 25 * 60; // Setzt auf 25 Minuten zurück
+            timeRemaining = 25 * 60;
             updateTimerDisplay();
             running = false;
         }
@@ -241,20 +267,14 @@
                 `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
 
-        // Laden der Textdatei und Initialisierung der Zeilenanzeige
         fetch('Begriffe.txt')
             .then(response => response.text())
             .then(text => {
-                lines = text.trim().split('\n'); // Text in Zeilen splitten und leere Einträge entfernen
-                unseenIndices = Array.from({length: lines.length}, (v, k) => k); // Indizes initialisieren
+                lines = text.trim().split('\n');
                 if (lines.length > 0) {
                     currentVisitedIndex = 0;
-                    visitedIndices.push(unseenIndices.shift()); // Ersten Eintrag als gesehen markieren
-                    displayLine(); // Zeigt den ersten Eintrag an
-                    updateButtons();
+                    displayLine();
+                    updateProgressBar();
                 }
             })
-            .catch(error => console.error('Fehler beim Laden der Datei:', error));
-    </script>
-</body>
-</html>
+            .catch(error => console.error('Fehler beim Laden der Datei:', error
