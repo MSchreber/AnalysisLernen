@@ -27,10 +27,15 @@
             width: 320px;
         }
 
-        /* Logo-Stil */
+        /* Logo-Stil mit Hover-Animation */
         .logo {
             max-width: 250px;
             margin-bottom: 10px;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        .logo:hover {
+            transform: rotate(-2deg) scale(1.1) rotate(2deg);
         }
 
         /* Titel */
@@ -117,16 +122,38 @@
             margin-top: 20px;
         }
 
+        /* Timer-Buttons */
+        .timer-button {
+            font-size: 1em;
+            padding: 10px 20px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            background: linear-gradient(45deg, #ff7b7b, #ffdb6b);
+        }
+        .timer-button:hover {
+            background: linear-gradient(45deg, #ff6363, #ffc94c);
+        }
+
         /* Timer-Stil */
         #timer {
             font-size: 2em;
             margin: 20px 0;
         }
+
+        /* Timer-Button-Container */
+        .timer-button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="bodenlos.png" alt="Logo" class="logo">
+        <img src="bodenlos.png" alt="Logo" class="logo" onclick="toggleHiddenBar()">
         <h1>Vokabel-Lerner</h1>
         <textarea id="output" readonly></textarea>
 
@@ -145,15 +172,14 @@
             <button onclick="nextLine()" id="nextButton">Weiter</button>
         </div>
 
-        <!-- Button zum Ein- und Ausblenden der Leiste mit Timer -->
-        <button onclick="toggleHiddenBar()" style="margin-top: 20px;">Timer anzeigen</button>
-
         <!-- Versteckte Leiste mit Countdown-Timer -->
         <div id="hiddenBar">
             <h2>Countdown Timer</h2>
             <div id="timer">25:00</div>
-            <button onclick="startTimer()">Start</button>
-            <button onclick="resetTimer()">Reset</button>
+            <div class="timer-button-container">
+                <button class="timer-button" onclick="startTimer()">Start</button>
+                <button class="timer-button" onclick="resetTimer()">Reset</button>
+            </div>
         </div>
     </div>
 
