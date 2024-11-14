@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maximilians Analysis Crackhütte</title>
     <link rel="icon" href="logo.ico" type="image/x-icon">
-    <link rel="icon" href="logo.png" type="image/png">
     <style>
         /* Grundlayout */
         body {
@@ -149,6 +148,24 @@
             justify-content: center;
             gap: 20px;
         }
+
+        /* Rotating Image */
+        #rotatingImage {
+            width: 100px;
+            height: 100px;
+            margin-top: 20px;
+            transition: transform 0.3s;
+        }
+
+        /* Animation for spinning */
+        .spin {
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -172,7 +189,7 @@
             <button onclick="nextLine()" id="nextButton">Weiter</button>
         </div>
 
-        <!-- Versteckte Leiste mit Countdown-Timer -->
+        <!-- Versteckte Leiste mit Countdown-Timer und rotierendes Bild -->
         <div id="hiddenBar">
             <h2>Countdown Timer</h2>
             <div id="timer">25:00</div>
@@ -180,13 +197,16 @@
                 <button class="timer-button" onclick="startTimer()">Start</button>
                 <button class="timer-button" onclick="resetTimer()">Reset</button>
             </div>
+            <img src="maxface.png" id="rotatingImage" alt="Max's Face">
         </div>
     </div>
 
     <script>
         let lines = [];
         let currentVisitedIndex = -1;
-        let visitedIndices = [];
+        let timer;
+        let timeRemaining = 25 * 60;
+        let running = false;
 
         function toggleHiddenBar() {
             const hiddenBar = document.getElementById('hiddenBar');
@@ -197,6 +217,7 @@
             const output = document.getElementById('output');
             if (currentVisitedIndex >= 0 && currentVisitedIndex < lines.length) {
                 output.value = lines[currentVisitedIndex];
+                updateProgressBar();
             } else {
                 output.value = "Keine weiteren Einträge.";
             }
@@ -223,7 +244,6 @@
             }
         }
 
-        // Fortschrittsanzeige
         function updateProgressBar() {
             const progressBar = document.getElementById('progressBar');
             const progressText = document.getElementById('progressText');
@@ -232,14 +252,10 @@
             progressText.textContent = Math.floor(percentage) + '%';
         }
 
-        // Timer-Logik
-        let timer;
-        let timeRemaining = 25 * 60;
-        let running = false;
-
         function startTimer() {
             if (!running) {
                 running = true;
+                document.getElementById('rotatingImage').classList.add('spin');
                 timer = setInterval(() => {
                     if (timeRemaining > 0) {
                         timeRemaining--;
@@ -248,6 +264,7 @@
                         clearInterval(timer);
                         alert("Zeit abgelaufen!");
                         running = false;
+                        document.getElementById('rotatingImage').classList.remove('spin');
                     }
                 }, 1000);
             }
@@ -258,6 +275,7 @@
             timeRemaining = 25 * 60;
             updateTimerDisplay();
             running = false;
+            document.getElementById('rotatingImage').classList.remove('spin');
         }
 
         function updateTimerDisplay() {
@@ -274,7 +292,9 @@
                 if (lines.length > 0) {
                     currentVisitedIndex = 0;
                     displayLine();
-                    updateProgressBar();
                 }
             })
-            .catch(error => console.error('Fehler beim Laden der Datei:', error
+            .catch(error => console.error('Fehler beim Laden der Datei:', error));
+    </script>
+</body>
+</html>
