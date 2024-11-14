@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maximilians Analysis Crackhütte</title>
+    <link rel="icon" href="logo.ico" type="image/x-icon">
+    <link rel="icon" href="logo.png" type="image/png">
     <style>
         /* Grundlayout */
         body {
@@ -24,36 +26,129 @@
             text-align: center;
             width: 320px;
         }
-        /* Versteckte Leiste */
-        #hiddenBar {
-            display: none;
-            margin-top: 20px;
+
+        /* Logo-Stil */
+        .logo {
+            max-width: 250px;
+            margin-bottom: 10px;
         }
-        #timer {
-            font-size: 2em;
-            margin: 20px 0;
+
+        /* Titel */
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #5a5a5a;
+        }
+
+        /* Textbereich */
+        #output {
+            width: 100%;
+            height: 100px;
+            font-size: 1.1em;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px;
+            resize: none;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* Fortschrittsanzeige */
+        .progress-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            height: 20px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, #ff5555, #ff9900, #4cda4c);
+            transition: width 0.3s;
+            position: relative;
+        }
+
+        .progress-bar #progressText {
+            position: absolute;
+            right: 10px;
+            color: white;
+            font-weight: bold;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Buttons */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
         }
         button {
             font-size: 1em;
-            padding: 10px 20px;
-            margin: 5px;
+            padding: 10px 15px;
             color: white;
             background-color: #6e8efb;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         button:hover {
             background-color: #5a6dcf;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        /* Versteckte Leiste */
+        #hiddenBar {
+            display: none;
+            margin-top: 20px;
+        }
+
+        /* Timer-Stil */
+        #timer {
+            font-size: 2em;
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Maximilians Analysis Crackhütte</h1>
-        <button onclick="toggleHiddenBar()">Optionen anzeigen</button>
+        <img src="bodenlos.png" alt="Logo" class="logo">
+        <h1>Vokabel-Lerner</h1>
+        <textarea id="output" readonly></textarea>
 
+        <!-- Fortschrittsanzeige -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">
+                <span id="progressText"></span>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button onclick="previousLine()" id="prevButton">Zurück</button>
+            <button onclick="shuffleLine()" id="shuffleButton">
+                <img src="shuffle.svg" alt="Shuffle" class="shuffle-icon"> Zufall
+            </button>
+            <button onclick="nextLine()" id="nextButton">Weiter</button>
+        </div>
+
+        <!-- Button zum Ein- und Ausblenden der Leiste mit Timer -->
+        <button onclick="toggleHiddenBar()" style="margin-top: 20px;">Timer anzeigen</button>
+
+        <!-- Versteckte Leiste mit Countdown-Timer -->
         <div id="hiddenBar">
             <h2>Countdown Timer</h2>
             <div id="timer">25:00</div>
@@ -63,17 +158,33 @@
     </div>
 
     <script>
-        let timer;
-        let timeRemaining = 25 * 60; // 25 Minuten in Sekunden
-        let running = false;
+        let lines = [];
+        let currentVisitedIndex = -1;
+        let visitedIndices = [];
+        let unseenIndices = [];
 
-        // Funktion zum Anzeigen/Verstecken der Leiste
+        // Funktion zum Anzeigen/Verstecken der Timer-Leiste
         function toggleHiddenBar() {
             const hiddenBar = document.getElementById('hiddenBar');
             hiddenBar.style.display = hiddenBar.style.display === 'none' ? 'block' : 'none';
         }
 
-        // Timer starten
+        // Funktion zur Anzeige der aktuellen Zeile
+        function displayLine() {
+            const output = document.getElementById('output');
+            if (currentVisitedIndex >= 0 && currentVisitedIndex < visitedIndices.length) {
+                const index = visitedIndices[currentVisitedIndex];
+                output.value = lines[index] || "Ende der Liste erreicht.";
+            } else {
+                output.value = "Keine weiteren Einträge.";
+            }
+        }
+
+        // Timer-Logik
+        let timer;
+        let timeRemaining = 25 * 60; // 25 Minuten in Sekunden
+        let running = false;
+
         function startTimer() {
             if (!running) {
                 running = true;
@@ -90,7 +201,6 @@
             }
         }
 
-        // Timer zurücksetzen
         function resetTimer() {
             clearInterval(timer);
             timeRemaining = 25 * 60; // Setzt auf 25 Minuten zurück
@@ -98,13 +208,21 @@
             running = false;
         }
 
-        // Timeranzeige aktualisieren
         function updateTimerDisplay() {
             const minutes = Math.floor(timeRemaining / 60);
             const seconds = timeRemaining % 60;
             document.getElementById("timer").textContent =
                 `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
+
+        // Laden der Textdatei (als Beispiel, Details in deinem Code)
+        fetch('Begriffe.txt')
+            .then(response => response.text())
+            .then(text => {
+                lines = text.split('\n'); // Text in Zeilen splitten
+                unseenIndices = Array.from({length: lines.length}, (v, k) => k);
+            })
+            .catch(error => console.error('Fehler beim Laden der Datei:', error));
     </script>
 </body>
 </html>
