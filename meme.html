@@ -5,28 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Hobby Website</title>
     <style>
-        body {
+        /* Gesamte Seite */
+        html, body {
             margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #74ebd5, #ACB6E5);
             color: #333;
+            height: 100%; /* Volle Höhe */
+        }
+
+        /* Hauptcontainer */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Footer bleibt unten */
+            height: 100%; /* Volle Höhe */
+        }
+
+        /* Inhalt */
+        .content {
+            flex: 1; /* Nimmt den verfügbaren Platz zwischen Header und Footer ein */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            overflow: hidden;
         }
-        h1 {
-            font-size: 3rem;
-            color: #fff;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0);
+
+        .hello-image {
+            max-width: 80%;
+            height: auto;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-        p {
+
+        .text-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .text-container p {
             font-size: 1.2rem;
-            color: #eee;
+            color: #333;
             margin: 0.5rem 0;
         }
+
         .btn {
             display: inline-block;
             margin-top: 1.5rem;
@@ -41,56 +69,64 @@
             cursor: pointer;
             transition: background 0.3s, transform 0.3s;
         }
+
         .btn:hover {
             background: linear-gradient(135deg, #2575fc, #6a11cb);
             transform: scale(1.1);
         }
+
+        /* Footer */
         footer {
-            position: absolute;
-            bottom: 10px;
-            font-size: 0.9rem;
+            background: #333;
             color: #ccc;
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 0.9rem;
         }
-        .login-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 0.5rem 1.2rem;
-            font-size: 1rem;
+
+        footer a {
             color: #fff;
-            background: #ff416c;
-            background: linear-gradient(135deg, #ff416c, #ff4b2b);
-            border: none;
-            border-radius: 25px;
             text-decoration: none;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.3s;
+            margin: 0 10px;
+            transition: color 0.3s;
         }
-        .login-btn:hover {
-            background: linear-gradient(135deg, #ff4b2b, #ff416c);
-            transform: scale(1.1);
+
+        footer a:hover {
+            color: #74ebd5;
         }
+
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
+            .hello-image {
+                max-width: 100%;
             }
-            p {
+            .text-container p {
                 font-size: 1rem;
             }
-            .btn, .login-btn {
+            .btn {
                 padding: 0.6rem 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Login Button -->
-    <a href="login.html" class="login-btn">Login</a>
+    <div class="main-container">
+        <!-- Inhalt -->
+        <div class="content">
+            <img src="{{ url_for('static', filename='hello.png') }}" alt="HELLO" class="hello-image">
+            <div class="text-container">
+                <p>Hi, ich bin Max! Hier findest du ein paar Details über mich und was mich aktuell bewegt.
+                    Aber hauptsächlich dient dieser Server als privates Hobbyprojekt mit der einen oder anderen versteckten Funktionalität.</p>
+            </div>
+            <a href="about.html" class="btn">mehr👀</a>
+        </div>
 
-    <!-- Main Content -->
-    <h1>Willkommen!</h1>
-    <p>Hier entsteht bald etwas größeres! Sei gespannt!</p>
-    <a href="about.html" class="btn">mehr👀</a>
-    <footer>&copy; 2024 Maximilian Schreber</footer>
+        <!-- Footer -->
+        <footer>
+            &copy; 2024 Maximilian Schreber. Alle Rechte vorbehalten.
+            <br>
+            <a href="https://www.linkedin.com/in/dein-profil/" target="_blank">LinkedIn</a> |
+            <a href="https://github.com/dein-username" target="_blank">GitHub</a>
+        </footer>
+    </div>
 </body>
 </html>

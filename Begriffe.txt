@@ -67,3 +67,8 @@ Was ist die Polardarstellung der Koordinaten?
 Was ist die Formulierung von Bolzano Weierstrass?
 Was ist der Limes inf und er Limes sup und wrum steigt und sinkt etwas immer?
 Was ist eine Teilfolge?
+Was ist ein innerer Punkt?
+Was ist eine offene Menge
+Ist die Betragsfunktion in x=0 differenzierbar? stetig? erkläre..
+Was ist eine Linksseitige Ableitung
+Was ist eine rechtsseitige Ableitung
