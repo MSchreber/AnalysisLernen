@@ -1,0 +1,111 @@
+/* Global Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Hintergrund mit Farbverlauf */
+.background {
+    height: 100%;
+    background: linear-gradient(135deg, #84fab0, #8fd3f4, #4facfe);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container für den Explorer */
+.container {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 30px;
+    width: 90%;
+    max-width: 800px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Header-Styling */
+h1 {
+    font-size: 2rem;
+    color: #4facfe;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* Pfad-Styling */
+.path {
+    font-weight: bold;
+    color: #4facfe;
+}
+
+/* Liste der Dateien */
+.file-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.file-list li {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+    transition: background 0.3s;
+}
+
+.file-list li:hover {
+    background: #e6f7ff;
+}
+
+/* Link-Styling */
+.file-link {
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+.file-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Logout-Schaltfläche */
+.logout-button {
+    display: inline-block;
+    margin-top: 20px;
+    background: #ff4b6e;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.logout-button:hover {
+    background: #e03a5b;
+}
+
+/* Responsiveness */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .file-list li {
+        font-size: 0.9rem;
+    }
+}
