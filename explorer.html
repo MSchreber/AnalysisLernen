@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Explorer</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>File Explorer</h1>
+        <p>Aktueller Pfad: <span class="path">{{ current_path }}</span></p>
+        <ul class="file-list">
+            {% for file in files %}
+            <li>
+                <a href="{{ url_for('explorer', path=current_path + '/' + file) }}" class="file-link">{{ file }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+    </div>
+</body>
+</html>

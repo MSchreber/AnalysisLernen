@@ -75,13 +75,35 @@
             transform: scale(1.1);
         }
 
+        /* Login Button */
+        .login-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 0.5rem 1.2rem;
+            font-size: 1rem;
+            color: #fff;
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .login-btn:hover {
+            background: linear-gradient(135deg, #ff4b2b, #ff416c);
+            transform: scale(1.1);
+        }
+
         /* Footer */
         footer {
-            background: #333;
-            color: #ccc;
+            color: #fff;
             text-align: center;
             padding: 10px 20px;
             font-size: 0.9rem;
+            background: none; /* Kein Hintergrund */
+            position: relative; /* Bleibt unten */
         }
 
         footer a {
@@ -102,7 +124,7 @@
             .text-container p {
                 font-size: 1rem;
             }
-            .btn {
+            .btn, .login-btn {
                 padding: 0.6rem 1.5rem;
             }
         }
@@ -110,9 +132,12 @@
 </head>
 <body>
     <div class="main-container">
+        <!-- Login Button -->
+        <a href="login.html" class="login-btn">Login</a>
+
         <!-- Inhalt -->
         <div class="content">
-            <img src="{{ url_for('static', filename='hello.png') }}" alt="HELLO" class="hello-image">
+            <img src="{{ url_for('static', filename='hello-image.jpg') }}" alt="HELLO" class="hello-image">
             <div class="text-container">
                 <p>Hi, ich bin Max! Hier findest du ein paar Details über mich und was mich aktuell bewegt.
                     Aber hauptsächlich dient dieser Server als privates Hobbyprojekt mit der einen oder anderen versteckten Funktionalität.</p>
