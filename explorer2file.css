@@ -4,37 +4,37 @@ body, html {
     padding: 0;
     height: 100%;
     font-family: 'Arial', sans-serif;
-}
-
-/* Hintergrund mit Farbverlauf */
-.background {
-    height: 100%;
-    background: linear-gradient(135deg, #84fab0, #8fd3f4, #4facfe);
     display: flex;
     justify-content: center;
     align-items: center;
+    background: linear-gradient(135deg, #84fab0, #8fd3f4, #4facfe);
+    background-attachment: fixed;
 }
 
 /* Container für den Explorer */
 .container {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.95); /* Leicht transparente weiße Box */
     border-radius: 12px;
     padding: 30px;
-    width: 90%;
-    max-width: 800px;
+    width: 70vw; /* Setzt die Breite auf 90% der Viewport-Breite */
+    max-width: 1600px; /* Beschränkt die maximale Breite */
     text-align: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box; /* Verhindert Überschreitungen durch Padding */
 }
 
 /* Header-Styling */
 h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     color: #4facfe;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 p {
-    color: #666;
+    color: #555;
     margin-bottom: 20px;
 }
 
@@ -42,6 +42,9 @@ p {
 .path {
     font-weight: bold;
     color: #4facfe;
+    word-wrap: break-word;
+    text-align: center;
+    max-width: 100%;
 }
 
 /* Liste der Dateien */
@@ -49,20 +52,25 @@ p {
     list-style-type: none;
     padding: 0;
     margin: 20px 0;
-    text-align: left;
+    width: 100%; /* Liste füllt den Container */
 }
 
 .file-list li {
     margin: 10px 0;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid #ccc;
     border-radius: 8px;
     background: #f9f9f9;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.2s;
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .file-list li:hover {
     background: #e6f7ff;
+    transform: translateY(-2px);
 }
 
 /* Link-Styling */
@@ -70,6 +78,7 @@ p {
     text-decoration: none;
     color: #007BFF;
     font-weight: bold;
+    word-break: break-word;
 }
 
 .file-link:hover {
@@ -79,33 +88,39 @@ p {
 
 /* Logout-Schaltfläche */
 .logout-button {
-    display: inline-block;
     margin-top: 20px;
     background: #ff4b6e;
     color: white;
-    padding: 10px;
+    padding: 10px 20px;
     text-align: center;
     text-decoration: none;
     border-radius: 8px;
     font-weight: bold;
-    transition: background 0.3s;
+    transition: background 0.3s, transform 0.2s;
 }
 
 .logout-button:hover {
     background: #e03a5b;
+    transform: translateY(-2px);
 }
 
 /* Responsiveness */
 @media (max-width: 600px) {
     .container {
         padding: 20px;
+        width: 95%; /* Breite auf kleineren Bildschirmen */
     }
 
     h1 {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
 
     .file-list li {
         font-size: 0.9rem;
+        flex-direction: column;
+    }
+
+    .file-list li:hover {
+        transform: none;
     }
 }
